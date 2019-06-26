@@ -59,11 +59,11 @@ def send_prediction_on_photo(bot, update):
 
     preds = model.predict(image_stream)
     count_of_pred = 3
-    answers = answer(preds, count_of_pred)
+    answered = answers(preds, count_of_pred)
     # теперь отправим результат
     out = ''
     for i in range(count_of_pred):
-        out += answers[i] + '\n'
+        out += answered[i] + '\n'
     update.message.reply_text(out)
 
 
