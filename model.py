@@ -26,7 +26,7 @@ class ArtPredictor:
         percent= self.evaluate_image(img)
         preds = zip(self.labels, percent)
         preds = sorted(preds, key = lambda t: t[1].item(), reverse=True)
-        preds = [list(t) for t in zip(*kek)]
+        preds = [list(t) for t in zip(*preds)]
         return preds
 
     def evaluate_image(self, img)->(str, float):
