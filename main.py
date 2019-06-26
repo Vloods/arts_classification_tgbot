@@ -64,7 +64,7 @@ def send_prediction_on_photo(bot, update):
     answered = answers(preds, count_of_pred)
     # теперь отправим результат
     out = ''
-    for i in range(count_of_pred):
+    for i in range(len(answered)):
         out += answered[i] + '\n'
     update.message.reply_text(out)
 
