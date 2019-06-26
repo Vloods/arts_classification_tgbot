@@ -14,8 +14,10 @@ def answers(preds, n):
     pred = preds[0:n]
     classes, percents = pred
     answers_ = []
+    answers_.append('Я думаю, что это: \n')
     for i in range(n):
-        answers_.append('Я думаю, что это: '+'\n'+str(classes[i])+ '\n'+'С шансом: '+str(round(percents[i].item()))+'%')
+        if(round(percents[i].item()) > 0):
+            answers_.append(str(i + 1) + ') ' + str(classes[i])+ '\n'+'С шансом: '+str(round(percents[i].item()))+'%')
     return answers_
 
 model = ArtPredictor()
@@ -58,7 +60,7 @@ def send_prediction_on_photo(bot, update):
     image_file.download(out=image_stream)
 
     preds = model.predict(image_stream)
-    count_of_pred = 3
+    count_of_pred = 5
     answered = answers(preds, count_of_pred)
     # теперь отправим результат
     out = ''
