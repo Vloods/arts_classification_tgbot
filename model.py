@@ -16,7 +16,7 @@ class ArtPredictor:
         img = img.resize(229)
         img.refresh()
         pred, percent= self.evaluate_image(img)
-        return pred, to_float(percent)
+        return pred, percent
 
     def evaluate_image(self, img)->(str, float):
         pred_class, pred_idx, outputs = self.model.predict(img)
