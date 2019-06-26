@@ -36,7 +36,7 @@ def info(bot, update):
     for clas in classes:
         answer += clas + '\n'
     bot.sendMessage(chat_id=update.message.chat_id,
-                    text="Я знаю таких художников, как \n" + answer)
+                    text="Я знаю таких художников, как: \n" + answer)
 info_handler = CommandHandler('info', info)
 
 def send_prediction_on_photo(bot, update):
