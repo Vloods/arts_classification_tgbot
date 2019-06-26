@@ -52,7 +52,7 @@ def send_prediction_on_photo(bot, update):
     class_, percent= model.predict(image_stream)
 
     # теперь отправим результат
-    update.message.reply_text(str(class_)+' Accuracy: '+str(percent))
+    update.message.reply_text(str(class_)+' Accuracy: '+str(round(percent.item())))
     print("Sent Answer to user, predicted: {}".format(class_))
 
 
