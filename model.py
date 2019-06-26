@@ -18,6 +18,6 @@ class ArtPredictor:
         pred, percent= self.evaluate_image(img)
         return pred, to_float(percent)
 
-    def evaluate_image(self, img)->(str, str):
+    def evaluate_image(self, img)->(str, float):
         pred_class, pred_idx, outputs = self.model.predict(img)
         return pred_class, outputs.max()*100
