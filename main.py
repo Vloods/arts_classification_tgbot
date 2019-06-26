@@ -20,20 +20,23 @@ def start(bot, update):
 start_handler = CommandHandler('start', start)
 
 def info(bot, update):
-    classes = ['Albrecht_Dürer', 'Alfred_Sisley', 'Amedeo_Modigliani', 'Andrei_Rublev', 'Andy_Warhol',
-               'Camille_Pissarro', 'Caravaggio',
-               'Claude_Monet', 'Diego_Rivera', 'Diego_Velazquez', 'Edgar_Degas', 'Edouard_Manet', 'Edvard_Munch',
-               'El_Greco', 'Eugene_Delacroix',
-               'Francisco_Goya', 'Frida_Kahlo', 'Georges_Seurat', 'Giotto_di_Bondone', 'Gustav_Klimt',
-               'Gustave_Courbet', 'Henri_Matisse', 'Henri_Rousseau',
-               'Henri_de_Toulouse-Lautrec', 'Hieronymus_Bosch', 'Jackson_Pollock', 'Jan_van_Eyck', 'Joan_Miro',
-               'Kazimir_Malevich', 'Leonardo_da_Vinci',
-               'Marc_Chagall', 'Michelangelo', 'Mikhail_Vrubel', 'Pablo_Picasso', 'Paul_Cezanne', 'Paul_Gauguin',
-               'Paul_Klee', 'Peter_Paul_Rubens', 'Pierre-Auguste_Renoir',
-               'Piet_Mondrian', 'Pieter_Bruegel', 'Raphael', 'Rembrandt', 'Rene_Magritte', 'Salvador_Dali',
-               'Sandro_Botticelli', 'Titian', 'Vasiliy_Kandinskiy', 'Vincent_van_Gogh', 'William_Turner']
+    classes = ['Albrecht Dürer', 'Alfred Sisley', 'Amedeo Modigliani', 'Andrei Rublev', 'Andy Warhol',
+               'Camille Pissarro', 'Caravaggio',
+               'Claude Monet', 'Diego Rivera', 'Diego Velazquez', 'Edgar Degas', 'Edouard Manet', 'Edvard Munch',
+               'El Greco', 'Eugene Delacroix',
+               'Francisco Goya', 'Frida Kahlo', 'Georges Seurat', 'Giotto di Bondone', 'Gustav Klimt',
+               'Gustave Courbet', 'Henri Matisse', 'Henri Rousseau',
+               'Henri de Toulouse-Lautrec', 'Hieronymus Bosch', 'Jackson Pollock', 'Jan van Eyck', 'Joan Miro',
+               'Kazimir Malevich', 'Leonardo da Vinci',
+               'Marc Chagall', 'Michelangelo', 'Mikhail Vrubel', 'Pablo Picasso', 'Paul Cezanne', 'Paul Gauguin',
+               'Paul Klee', 'Peter Paul Rubens', 'Pierre-Auguste Renoir',
+               'Piet Mondrian', 'Pieter Bruegel', 'Raphael', 'Rembrandt', 'Rene Magritte', 'Salvador Dali',
+               'Sandro Botticelli', 'Titian', 'Vasiliy Kandinskiy', 'Vincent van Gogh', 'William Turner']
+    answer = ''
+    for clas in classes:
+        answer += clas + '\n'
     bot.sendMessage(chat_id=update.message.chat_id,
-                    text="Я знаю таких художников, как Albrecht_Dürer, Alfred_Sisley, Amedeo_Modigliani, Andrei_Rublev, Andy_Warhol, Camille_Pissarro, Caravaggio, Claude_Monet, Diego_Rivera, Diego_Velazquez, Edgar_Degas, Edouard_Manet, Edvard_Munch, El_Greco, Eugene_Delacroix, Francisco_Goya, Frida_Kahlo, Georges_Seurat, Giotto_di_Bondone, Gustav_Klimt, Gustave_Courbet, Henri_Matisse, Henri_Rousseau, Henri_de_Toulouse-Lautrec, Hieronymus_Bosch, Jackson_Pollock, Jan_van_Eyck, Joan_Miro, Kazimir_Malevich, Leonardo_da_Vinci, Marc_Chagall, Michelangelo, Mikhail_Vrubel, Pablo_Picasso, Paul_Cezanne, Paul_Gauguin, Paul_Klee, Peter_Paul_Rubens, Pierre-Auguste_Renoir, Piet_Mondrian, Pieter_Bruegel, Raphael, Rembrandt, Rene_Magritte, Salvador_Dali, Sandro_Botticelli, Titian, Vasiliy_Kandinskiy, Vincent_van_Gogh, William_Turner")
+                    text="Я знаю таких художников, как \n" + answer)
 info_handler = CommandHandler('info', info)
 
 def send_prediction_on_photo(bot, update):
@@ -49,7 +52,7 @@ def send_prediction_on_photo(bot, update):
     class_, percent= model.predict(image_stream)
 
     # теперь отправим результат
-    update.message.reply_text(str(class_)+' Accuracy: '+str(percent.item))
+    update.message.reply_text(str(class_)+' Accuracy: '+str(percent))
     print("Sent Answer to user, predicted: {}".format(class_))
 
 
