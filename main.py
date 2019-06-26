@@ -10,6 +10,14 @@ reply_text= {
                    'dataloader you used while training'
 }
 
+def answers(preds, n):
+    pred = preds[0:n]
+    classes, percents = pred
+    answers_ = []
+    for i in range(n):
+        answers_.append('Я думаю, что это: '+'\n'+str(classes[i])+ '\n'+'С шансом: '+str(round(percents[i].item()))+'%')
+    return answers_
+
 model = ArtPredictor()
 
 def start(bot, update):
@@ -49,19 +57,20 @@ def send_prediction_on_photo(bot, update):
     image_stream = BytesIO()
     image_file.download(out=image_stream)
 
-    class_, percent= model.predict(image_stream)
-
+    preds = model.predict(image_stream)
+    count_of_pred = 3
+    answers = answer(preds, count_of_pred)
     # теперь отправим результат
-    update.message.reply_text('Я думаю, что это: '+'\n'+str(class_)+ '\n'+'С шансом: '+str(round(percent.item()))+'%')
-    print("Sent Answer to user, predicted: {}".format(class_))
+    out = ''
+    for i in range(count_of_pred):
+        out += answers[i] + '\n'
+    update.message.reply_text(out)
 
 
 if __name__ == '__main__':
-    # Включим самый базовый логгинг, чтобы видеть сообщения об ошибках
     logging.basicConfig(
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         level=logging.INFO)
-    # используем прокси, так как без него у меня ничего не работало(
 
     updater = Updater(token=token)
 
