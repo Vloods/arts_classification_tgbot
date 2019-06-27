@@ -20,15 +20,28 @@ class ArtPredictor:
                'Piet Mondrian', 'Pieter Bruegel', 'Raphael', 'Rembrandt', 'Rene Magritte', 'Salvador Dali',
                'Sandro Botticelli', 'Titian', 'Vasiliy Kandinskiy', 'Vincent van Gogh', 'William Turner']
     def predict(self, stream):
+        '''
+        Функция обрабатывает картинку, получает предсказания для этой картинки и отправляет зип, содержащий имя
+        художника и вероятность принадлежности ему этой картины.
+        '''
+        # принимаем картинку и ресайзим ее
         img = (open_image(stream))
         img = img.resize(229)
         img.refresh()
+        # получаем проценты для каждого художника по этой картине
         percent= self.evaluate_image(img)
+        # объединяем вероятности с художниками
         preds = zip(self.labels, percent)
+        # сортируем
         preds = sorted(preds, key = lambda t: t[1].item(), reverse=True)
+        # разделяем художников и вероятности по двум разным спискам
         preds = [list(t) for t in zip(*preds)]
+        
         return preds
 
     def evaluate_image(self, img)->(str, float):
+        '''
+        Функция возвращает проценты, предсказанные моделью для каждой модели.
+        '''
         pred_class, pred_idx, outputs = self.model.predict(img)
         return outputs*100
