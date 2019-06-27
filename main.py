@@ -3,14 +3,14 @@ from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
 import logging
 from model import ArtPredictor
 import os
+
 token = os.getenv("token")
 
-reply_text= {
-    'pred_answer': 'I predicted class with index {}. To show class name you will need to extract it from' +
-                   'dataloader you used while training'
-}
-
 def answers(preds, n):
+    '''
+    Функция принимает на вход зип, содержащий предсказания модели, и колличество необходимых нам предсказаний,
+    Далее он обрабатывает их и выдает ответы для нашего бота.
+    '''
     pred = preds[0:n]
     classes, percents = pred
     answers_ = []
@@ -30,6 +30,9 @@ def start(bot, update):
 start_handler = CommandHandler('start', start)
 
 def info(bot, update):
+    '''
+    Функция реализует вывод имен всех известных боту художников.
+    '''
     classes = ['Albrecht Dürer', 'Alfred Sisley', 'Amedeo Modigliani', 'Andrei Rublev', 'Andy Warhol',
                'Camille Pissarro', 'Caravaggio',
                'Claude Monet', 'Diego Rivera', 'Diego Velazquez', 'Edgar Degas', 'Edouard Manet', 'Edvard Munch',
@@ -50,6 +53,9 @@ def info(bot, update):
 info_handler = CommandHandler('info', info)
 
 def send_prediction_on_photo(bot, update):
+    '''
+    Функция реализует ответ бота на полученную картинку.
+    '''
     chat_id = update.message.chat_id
     print("Got image from {}".format(chat_id))
 
@@ -58,9 +64,11 @@ def send_prediction_on_photo(bot, update):
     image_file = bot.get_file(image_info)
     image_stream = BytesIO()
     image_file.download(out=image_stream)
-
+    # получение предсказаний модели
     preds = model.predict(image_stream)
+    # кол-во предсказаний на выходе
     count_of_pred = 5
+    # Получаем ответы для бота
     answered = answers(preds, count_of_pred)
     # теперь отправим результат
     out = ''
